@@ -17,3 +17,7 @@
 	background-color: green !important;
 	color: red !important;
 }
+.non-winning-square{
+	background-color: red !important;
+	color: green !important;
+}

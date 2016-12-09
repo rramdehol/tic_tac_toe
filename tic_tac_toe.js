@@ -98,24 +98,28 @@ function gameOver(whoJustWon, winningCombo){
 	for(var i=0; i<winningCombo.length;i++){
 		document.getElementById(winningCombo[i]).className += " winning-square";
 	}
-
-	// for(var h=0;h<;h++){
-	// 	document.getElementById().className += " non-winning-square";
-	// }
+	var nonWinningSquaresArray = nonWinningSquares(winningCombo);
+	for(var h=0;h<nonWinningSquaresArray.length;h++){
+		document.getElementById(nonWinningSquaresArray[h]).className += " non-winning-square";
+	}
 	someoneWon = true;
 }	
 
-// function nonWinningSquaes(winningCombo){
-// 	var allSquares = ["A1","B1","C1","A2","B2","C2","A3","B3","C3"]
-// 	var nonWinningSquares = [];
-// 	for(var i=0; i<winningCombo.length;i++){
-// 		for(var j=0; j<allSquares.length; j++){
-// 			if(allSquares.indexOf(winningCombo[i]) === -1){
-// 				nonWinningSquares.push(allSquares[j])
-// 			}
-// 		}
-// 	}	
-// }
+
+function nonWinningSquares(winningCombo){
+	var allSquares = ["A2","B2","C2","A3","B3","C3","A1","B1","C1"];
+	var nonWinningSquares = [];
+	for(var i=0; i<winningCombo.length;i++){
+		for(var j=0; j<allSquares.length;j++){
+			if(allSquares.indexOf(winningCombo[i]) > -1){
+			  indexOfFound = allSquares.indexOf(winningCombo[i]);
+	      		allSquares.splice(indexOfFound,1);
+			}
+		}
+	}
+	return(allSquares);
+}
+
 
 
 
