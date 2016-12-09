@@ -13,7 +13,6 @@
 // 6.Keep player from overwrting sqaure 
 // 7. We need a win checker
 
-var whosTurn =1;
 // Setup winners array
 var winningCombos =[
 	["A1","B1","C1"],
@@ -27,57 +26,96 @@ var winningCombos =[
 ]
 var player1Squares = [];
 var player2Squares = [];
-console.dir(winningCombos);
+var whosTurn =1;
+var someoneWon = false;
+
+// console.dir(winningCombos);
 function markSquare(currentSquare){
 	console.dir(currentSquare);
 	if((currentSquare.innerHTML === "X")||(currentSquare.innerHTML === "O")){
-		console.log("You CHeated");
+		console.log("Wait Your Turn");
+	}
+	else if(someoneWon){
+		console.log("Someone Already Won");
 	}	
 	else{
 		if(whosTurn === 1){
 			currentSquare.innerHTML = "X";
 			whosTurn = 2;
-			player1Squares.push(currentSquare.id); 
+			player1Squares.push(currentSquare.id);
+			checkWin(1, player1Squares); 
 		}
 		else{
 			currentSquare.innerHTML = "O";
 			whosTurn = 1;
 			player2Squares.push(currentSquare.id);
+			checkWin(2, player2Squares);
 		}
-		checkWin();
-		console.log(player1Squares);
-		console.log(player2Squares);
+		// checkWin();
+		// console.log(player1Squares);
+		// console.log(player2Squares);
 	}	
 }
 
-function checkWin(){
+function checkWin(whoJustWent, currentPlayerSquares){
+	// if(whoJustWent ===1){
+	// 	playerArray = player1Squares;
+	// }
+	// else{
+	// 	playerArray = player2Squares;
+	// }
 	for(var i = 0; i < winningCombos.length; i++){
 		// console.log(winningCombos[i])
 		var rowCount1 =0;
-		var rowCount2 =0;
+		// var rowCount2 =0;
 		for(var j=0; j < winningCombos[i].length; j++){
 			// console.log(winningCombos[i][j]);
 			var winningSquare = winningCombos[i][j];
-			if(player1Squares.indexOf(winningSquare) > -1){
+			if(currentPlayerSquares.indexOf(winningSquare) > -1){
 				// HIT PLAYER HAS THIS SQUARE SOMEWHERE
 				rowCount1++;
 			}
-			if(player2Squares.indexOf(winningSquare) > -1){
-				// HIT PLAYER HAS THIS SQUARE SOMEWHERE
-				rowCount2++;
-			}
+			// if(player2Squares.indexOf(winningSquare) > -1){
+			// 	// HIT PLAYER HAS THIS SQUARE SOMEWHERE
+			// 	rowCount2++;
+			// }
 		}
 		if(rowCount1 === 3){
 			// Player had all 3 of these j's.Win
-			console.log("Player 1 Wins");
+			console.log("Player" + whoJustWent + "Wins");
+			gameOver(whoJustWent, winningCombos[i]);
 		}
-		if(rowCount2 === 3){
-			// Player had all 3 of these j's.Win
-			console.log("Player 2 Wins");
-		}
-		}
-	}	
+		// if(rowCount2 === 3){
+		// 	// Player had all 3 of these j's.Win
+		// 	console.log("Player 2 Wins");
+		// }
+	}
+}
 
+function gameOver(whoJustWon, winningCombo){
+	var message = "Player " +whoJustWon +" You just won with "+winningCombo;
+	document.getElementById("message").innerHTML = message;
+	for(var i=0; i<winningCombo.length;i++){
+		document.getElementById(winningCombo[i]).className += " winning-square";
+	}
+
+	// for(var h=0;h<;h++){
+	// 	document.getElementById().className += " non-winning-square";
+	// }
+	someoneWon = true;
+}	
+
+// function nonWinningSquaes(winningCombo){
+// 	var allSquares = ["A1","B1","C1","A2","B2","C2","A3","B3","C3"]
+// 	var nonWinningSquares = [];
+// 	for(var i=0; i<winningCombo.length;i++){
+// 		for(var j=0; j<allSquares.length; j++){
+// 			if(allSquares.indexOf(winningCombo[i]) === -1){
+// 				nonWinningSquares.push(allSquares[j])
+// 			}
+// 		}
+// 	}	
+// }
 
 
 
